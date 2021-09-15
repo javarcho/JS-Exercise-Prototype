@@ -39,14 +39,28 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-  
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
-
-
-
-
-
+Person.prototype.eat = function(edible){
+  if(this.stomach.length < 10){
+    this.stomach.push(edible);
+  }
+}
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
+Person.prototype.toString = function(){
+return `${this.name}, ${this.age}`;
+}
+const mary = new Person('Mary', 50);
+console.log(mary.toString());
+mary.eat('chips')
+console.log(mary.stomach);
+mary.poop();
+console.log(mary.stomach);
 
 
 /*
@@ -63,8 +77,14 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
 }
 
 
@@ -75,18 +95,23 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
- 
+function Baby(favoriteToy, name, age) {
+ Person.call(this, favoriteToy, name, age);
+ this.favoriteToy = favoriteToy;
 }
 
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. whether the function is new, to either add new information or to reference a new material
+  2. if the function is called, applied, or binded, to specify the desired outcome
+  3. is the function called by a method, to indicate what the function will accomplish
+  4. will the function accept a global scope when available and will strict mode return undefined when referenced 
 */
 
 
